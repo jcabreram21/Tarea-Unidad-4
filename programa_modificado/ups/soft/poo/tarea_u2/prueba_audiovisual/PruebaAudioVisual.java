@@ -88,7 +88,7 @@ public class PruebaAudioVisual {
     	
     	
     	// Se empieza a diseñar la interfaz
-      System.out.println("======== PRUEBA DE FUNCIONAMIENTO ========");
+      System.out.println("======== GESTION DE CONTENIDO AUDIOVISUAL ========");
       System.out.println("Hola, puedes elegir entre Peliculas, Series, Documentales, Videos Musicales o Podcasts.\n");
       System.out.println("Menu de eleccion:\n1. Peliculas.\n2. Series.\n3. Documentales.\n4. Videos Musicales.\n5. Podcasts.\n6. Salir");
       int eleccion = validacionIngresos(entrada);

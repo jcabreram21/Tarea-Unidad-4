@@ -22,6 +22,11 @@ public class Pelicula extends ContenidoAudiovisual {
         return estudio;
     }
 
+    public ArrayList<Actor> getActores() {
+        return actores;
+    }
+    
+    
     public void setEstudio(String estudio) {
         this.estudio = estudio;
     }
@@ -38,5 +43,26 @@ public class Pelicula extends ContenidoAudiovisual {
         for (Actor actor : actores) {
 	        actor.mostrarDetalles();
         }
+    }
+    @Override
+    public String construirFilaCsv() {
+        StringBuilder nombresActores = new StringBuilder();
+        if (actores != null) {
+            for (int i = 0; i < actores.size(); i++) {
+                if (i > 0) {
+                    nombresActores.append(";");
+                }
+                if (actores.get(i) != null) {
+                    nombresActores.append(actores.get(i).getNombre());
+                }
+            }
+        }
+
+        return "Pelicula,"
+                + getTitulo() + ","
+                + getDuracionEnMinutos() + ","
+                + getGenero() + ","
+                + this.estudio + ","
+                + nombresActores.toString();
     }
 }

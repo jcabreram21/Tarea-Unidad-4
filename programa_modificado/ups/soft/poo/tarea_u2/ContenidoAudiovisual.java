@@ -42,6 +42,7 @@ public abstract class ContenidoAudiovisual {
         this.genero = genero;
     }
 
+    public abstract String construirFilaCsv();
     
     public abstract void mostrarDetalles();
     

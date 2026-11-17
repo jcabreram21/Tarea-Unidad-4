@@ -54,5 +54,28 @@ public class VideoMusical extends ContenidoAudiovisual {
 		    }
 		}	
 	}
+	@Override
+    public String construirFilaCsv() {
+        StringBuilder nombresActores = new StringBuilder();
+        if (actoresVidMus != null) {
+            for (int i = 0; i < actoresVidMus.size(); i++) {
+                if (i > 0) {
+                    nombresActores.append(";");
+                }
+                if (actoresVidMus.get(i) != null) {
+                    nombresActores.append(actoresVidMus.get(i).getNombre());
+                }
+            }
+        }
 
+        String fecha = (this.fechaLanzamiento != null) ? this.fechaLanzamiento : "";
+
+        return "VideoMusical,"
+                + getTitulo() + ","
+                + getDuracionEnMinutos() + ","
+                + getGenero() + ","
+                + this.artista + ","
+                + fecha + ","
+                + nombresActores.toString();
+    }
 }
