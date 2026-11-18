@@ -49,12 +49,18 @@ public class Documental extends ContenidoAudiovisual {
     }
     @Override
     public String construirFilaCsv() {
-        String nombreInvestigador = (investigador != null) ? investigador.getNombre() : "";
+        String datosInvestigador = "";
+        if (investigador != null) {
+            String nombre = (investigador.getNombre() != null) ? investigador.getNombre() : "";
+            String nacionalidad = (investigador.getNacionalidad() != null) ? investigador.getNacionalidad() : "";
+            datosInvestigador = nombre + "|" + investigador.getEdad() + "|" + nacionalidad;
+        }
+
         return "Documental,"
                 + getTitulo() + ","
                 + getDuracionEnMinutos() + ","
                 + getGenero() + ","
                 + this.tema + ","
-                + nombreInvestigador;
+                + datosInvestigador;
     }
 }

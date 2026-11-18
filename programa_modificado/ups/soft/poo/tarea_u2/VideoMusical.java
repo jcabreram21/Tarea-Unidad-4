@@ -56,15 +56,23 @@ public class VideoMusical extends ContenidoAudiovisual {
 	}
 	@Override
     public String construirFilaCsv() {
-        StringBuilder nombresActores = new StringBuilder();
+        StringBuilder datosActores = new StringBuilder();
         if (actoresVidMus != null) {
             for (int i = 0; i < actoresVidMus.size(); i++) {
-                if (i > 0) {
-                    nombresActores.append(";");
+                Actor actorActual = actoresVidMus.get(i);
+                if (actorActual == null) {
+                    continue;
                 }
-                if (actoresVidMus.get(i) != null) {
-                    nombresActores.append(actoresVidMus.get(i).getNombre());
+                if (datosActores.length() > 0) {
+                    datosActores.append(";");
                 }
+                datosActores.append(actorActual.getNombre())
+                        .append("|")
+                        .append(actorActual.getEdad())
+                        .append("|")
+                        .append(actorActual.getAltura())
+                        .append("|")
+                        .append(actorActual.getNacionalidad());
             }
         }
 
@@ -76,6 +84,7 @@ public class VideoMusical extends ContenidoAudiovisual {
                 + getGenero() + ","
                 + this.artista + ","
                 + fecha + ","
-                + nombresActores.toString();
+                + datosActores.toString();
     }
-}
+    }
+

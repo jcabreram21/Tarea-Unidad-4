@@ -46,15 +46,23 @@ public class Pelicula extends ContenidoAudiovisual {
     }
     @Override
     public String construirFilaCsv() {
-        StringBuilder nombresActores = new StringBuilder();
+        StringBuilder datosActores = new StringBuilder();
         if (actores != null) {
             for (int i = 0; i < actores.size(); i++) {
-                if (i > 0) {
-                    nombresActores.append(";");
+                Actor actorActual = actores.get(i);
+                if (actorActual == null) {
+                    continue;
                 }
-                if (actores.get(i) != null) {
-                    nombresActores.append(actores.get(i).getNombre());
+                if (datosActores.length() > 0) {
+                    datosActores.append(";");
                 }
+                datosActores.append(actorActual.getNombre())
+                        .append("|")
+                        .append(actorActual.getEdad())
+                        .append("|")
+                        .append(actorActual.getAltura())
+                        .append("|")
+                        .append(actorActual.getNacionalidad());
             }
         }
 
@@ -63,6 +71,6 @@ public class Pelicula extends ContenidoAudiovisual {
                 + getDuracionEnMinutos() + ","
                 + getGenero() + ","
                 + this.estudio + ","
-                + nombresActores.toString();
+                + datosActores.toString();
     }
-}
+    }

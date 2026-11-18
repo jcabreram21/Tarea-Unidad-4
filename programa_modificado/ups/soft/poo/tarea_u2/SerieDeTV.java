@@ -59,23 +59,31 @@ public class SerieDeTV extends ContenidoAudiovisual {
         StringBuilder detalleTemporadas = new StringBuilder();
         if (temporadas != null) {
             for (int i = 0; i < temporadas.size(); i++) {
-                if (i > 0) {
+                Temporada t = temporadas.get(i);
+                if (t == null) {
+                    continue;
+                }
+                if (detalleTemporadas.length() > 0) {
                     detalleTemporadas.append(";");
                 }
-                Temporada t = temporadas.get(i);
-                if (t != null) {
-                    detalleTemporadas.append("T").append(t.getNumTemporada())
-                            .append("-").append(t.getNumCapitulos()).append("ep");
-                }
+                detalleTemporadas.append(t.getNumTemporada())
+                        .append("-")
+                        .append(t.getNumCapitulos());
             }
         }
+
+        int cantidadTemporadas = (temporadas != null && !temporadas.isEmpty())
+                ? temporadas.size()
+                : this.totalTemporadas;
 
         return "SerieDeTV,"
                 + getTitulo() + ","
                 + getDuracionEnMinutos() + ","
                 + getGenero() + ","
-                + this.totalTemporadas + ","
+                + cantidadTemporadas + ","
                 + detalleTemporadas.toString();
-    }
-}
+     }
+   }
+    
+
 	

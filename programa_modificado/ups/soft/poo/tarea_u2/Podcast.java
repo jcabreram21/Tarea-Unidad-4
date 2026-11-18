@@ -52,15 +52,22 @@ public class Podcast extends ContenidoAudiovisual {
 	    }
 	@Override
     public String construirFilaCsv() {
-        String nombreInvitado = (invitado != null) ? invitado.getNombre() : "";
+        String datosInvitado = "";
+        if (invitado != null) {
+            String nombre = (invitado.getNombre() != null) ? invitado.getNombre() : "";
+            String nacionalidad = (invitado.getNacionalidad() != null) ? invitado.getNacionalidad() : "";
+            datosInvitado = nombre + "|" + invitado.getEdad() + "|" + nacionalidad;
+        }
+
         return "Podcast,"
                 + getTitulo() + ","
                 + getDuracionEnMinutos() + ","
                 + getGenero() + ","
                 + this.numTemporada + ","
                 + this.numEpisodio + ","
-                + nombreInvitado;
+                + datosInvitado;
+    }
         }
-	}
+	
 
 
