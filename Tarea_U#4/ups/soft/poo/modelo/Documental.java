@@ -1,38 +1,32 @@
-/**
- * Class Documental
- */
-package ups.soft.poo.tarea_u2;
+package ups.soft.poo.modelo;
 
-// Subclase Documental que extiende de ContenidoAudiovisual
 public class Documental extends ContenidoAudiovisual {
+
     private String tema;
     private Investigador investigador;
-    
-    // Se crea el constructor
+
     public Documental(String titulo, int duracionEnMinutos, String genero, String tema, Investigador investigador) {
-        super(titulo, duracionEnMinutos, genero);
-        this.tema = tema;
-        this.investigador = investigador;
+    super(titulo, duracionEnMinutos, genero);
+    this.tema = tema;
+    this.investigador = investigador;
     }
 
-    // Se cresn los metodos getters y setters
     public Investigador getInvestigador() {
-		return investigador;
-	}
+    return investigador;
+    }
 
-	public void setInvestigador(Investigador investigador) {
-		this.investigador = investigador;
-	}
+    public void setInvestigador(Investigador investigador) {
+    this.investigador = investigador;
+    }
 
-	public String getTema() {
-        return tema;
+    public String getTema() {
+    return tema;
     }
 
     public void setTema(String tema) {
-        this.tema = tema;
+    this.tema = tema;
     }
-    
-    // Se configura el metodo mostrar detalles que usara polimorfismo
+
     @Override
     public void mostrarDetalles() {
         System.out.println("Detalles del documental:");
@@ -42,14 +36,14 @@ public class Documental extends ContenidoAudiovisual {
         System.out.println("Tema: " + this.tema);
         System.out.println();
         if (investigador != null) {
-            System.out.println("Indormacion del investigador principal:");
+            System.out.println("Informacion del investigador principal:");
             investigador.mostrarInvestigador();
-    
         }
     }
+
     @Override
     public String construirFilaCsv() {
-        String datosInvestigador = "";
+    String datosInvestigador = "";
         if (investigador != null) {
             String nombre = (investigador.getNombre() != null) ? investigador.getNombre() : "";
             String nacionalidad = (investigador.getNacionalidad() != null) ? investigador.getNacionalidad() : "";
@@ -57,10 +51,10 @@ public class Documental extends ContenidoAudiovisual {
         }
 
         return "Documental,"
-                + getTitulo() + ","
-                + getDuracionEnMinutos() + ","
-                + getGenero() + ","
-                + this.tema + ","
-                + datosInvestigador;
+        + getTitulo() + ","
+        + getDuracionEnMinutos() + ","
+        + getGenero() + ","
+        + this.tema + ","
+        + datosInvestigador;
     }
 }

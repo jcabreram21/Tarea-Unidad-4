@@ -1,21 +1,25 @@
-package ups.soft.poo.tarea_u2;
+package ups.soft.poo.modelo;
 
 public abstract class ContenidoAudiovisual {
-    private static int contar = 0;
+
+    private static int contadorId = 1;
+
+    private final int id;
     private String titulo;
     private int duracionEnMinutos;
     private String genero;
-    private int id;
-    
-    // Se cres el constructor
-    public ContenidoAudiovisual(String titulo, int duracionEnMinutos, String genero) {
-        this.id = contar++;
+
+    protected ContenidoAudiovisual(String titulo, int duracionEnMinutos, String genero) {
+        this.id = contadorId++;
         this.titulo = titulo;
         this.duracionEnMinutos = duracionEnMinutos;
         this.genero = genero;
     }
 
-    // Se crean los metodos getters y setters 
+    public int getId() {
+        return id;
+    }
+
     public String getTitulo() {
         return titulo;
     }
@@ -24,7 +28,6 @@ public abstract class ContenidoAudiovisual {
         this.titulo = titulo;
     }
 
-   
     public int getDuracionEnMinutos() {
         return duracionEnMinutos;
     }
@@ -33,7 +36,6 @@ public abstract class ContenidoAudiovisual {
         this.duracionEnMinutos = duracionEnMinutos;
     }
 
-   
     public String getGenero() {
         return genero;
     }
@@ -43,9 +45,6 @@ public abstract class ContenidoAudiovisual {
     }
 
     public abstract String construirFilaCsv();
-    
+
     public abstract void mostrarDetalles();
-    
-}    
-   
-    
+}

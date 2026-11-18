@@ -1,4 +1,4 @@
-package ups.soft.poo.tarea_u4.archivos;
+package ups.soft.poo.controlador;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -7,19 +7,22 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import ups.soft.poo.tarea_u2.Actor;
-import ups.soft.poo.tarea_u2.ContenidoAudiovisual;
-import ups.soft.poo.tarea_u2.Documental;
-import ups.soft.poo.tarea_u2.Investigador;
-import ups.soft.poo.tarea_u2.Pelicula;
-import ups.soft.poo.tarea_u2.Podcast;
-import ups.soft.poo.tarea_u2.SerieDeTV;
-import ups.soft.poo.tarea_u2.Temporada;
-import ups.soft.poo.tarea_u2.VideoMusical;
+
+import ups.soft.poo.modelo.Actor;
+import ups.soft.poo.modelo.ContenidoAudiovisual;
+import ups.soft.poo.modelo.Documental;
+import ups.soft.poo.modelo.Investigador;
+import ups.soft.poo.modelo.Pelicula;
+import ups.soft.poo.modelo.Podcast;
+import ups.soft.poo.modelo.SerieDeTV;
+import ups.soft.poo.modelo.Temporada;
+import ups.soft.poo.modelo.VideoMusical;
 
 public class GestorArchivosCsv {
 
     private static final String DELIMITADOR_CSV = ",";
+    private static final String SEPARADOR_SUBCAMPOS = "\\|";
+    private static final String SEPARADOR_LISTA = ";";
 
     public void guardarContenidosDesdeListas(
             String rutaArchivoCsv,
@@ -157,7 +160,8 @@ public class GestorArchivosCsv {
         String genero = columna(cols, 3);
         String estudio = columna(cols, 4);
         Pelicula pelicula = new Pelicula(titulo, duracion, genero, estudio);
-        agregarActoresDesdeCsv(pelicula, columna(cols, 5));
+        List<Actor> actores = leerActores(columna(cols, 5));
+        pelicula.agregarActores(actores.toArray(new Actor[0]));
         return pelicula;
     }
 
@@ -189,7 +193,8 @@ public class GestorArchivosCsv {
         String fecha = columna(cols, 5);
         VideoMusical video = new VideoMusical(titulo, duracion, genero, artista);
         video.setFechaLanzamiento(fecha);
-        agregarActoresDesdeCsv(video, columna(cols, 6));
+        List<Actor> actores = leerActores(columna(cols, 6));
+        video.agregarActores(actores.toArray(new Actor[0]));
         return video;
     }
 
@@ -197,7 +202,7 @@ public class GestorArchivosCsv {
         if (datosCsv == null || datosCsv.trim().isEmpty()) {
             return null;
         }
-        String[] partes = datosCsv.split("\\|", -1);
+        String[] partes = datosCsv.split(SEPARADOR_SUBCAMPOS, -1);
         String nombre = partes.length > 0 ? partes[0].trim() : "";
         if (nombre.isEmpty()) {
             return null;
@@ -207,29 +212,17 @@ public class GestorArchivosCsv {
         return new Investigador(nombre, edad, nacionalidad);
     }
 
-    private void agregarActoresDesdeCsv(Pelicula pelicula, String actoresCsv) {
-        for (Actor actor : leerActores(actoresCsv)) {
-            pelicula.agregarActores(actor);
-        }
-    }
-
-    private void agregarActoresDesdeCsv(VideoMusical video, String actoresCsv) {
-        for (Actor actor : leerActores(actoresCsv)) {
-            video.agregarActores(actor);
-        }
-    }
-
     private List<Actor> leerActores(String actoresCsv) {
         List<Actor> actores = new ArrayList<>();
         if (actoresCsv == null || actoresCsv.trim().isEmpty()) {
             return actores;
         }
-        for (String bloqueActor : actoresCsv.split(";")) {
+        for (String bloqueActor : actoresCsv.split(SEPARADOR_LISTA)) {
             String limpio = bloqueActor.trim();
             if (limpio.isEmpty()) {
                 continue;
             }
-            String[] partes = limpio.split("\\|", -1);
+            String[] partes = limpio.split(SEPARADOR_SUBCAMPOS, -1);
             String nombre = partes.length > 0 ? partes[0].trim() : "";
             if (nombre.isEmpty()) {
                 continue;
@@ -246,7 +239,7 @@ public class GestorArchivosCsv {
         if (temporadasCsv == null || temporadasCsv.trim().isEmpty()) {
             return;
         }
-        for (String bloque : temporadasCsv.split(";")) {
+        for (String bloque : temporadasCsv.split(SEPARADOR_LISTA)) {
             String limpio = bloque.trim().replace("ep", "");
             if (!limpio.isEmpty() && limpio.contains("-")) {
                 String[] partes = limpio.split("-");
