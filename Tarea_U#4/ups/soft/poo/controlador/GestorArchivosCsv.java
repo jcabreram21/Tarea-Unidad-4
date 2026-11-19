@@ -7,7 +7,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
 import ups.soft.poo.modelo.Actor;
 import ups.soft.poo.modelo.ContenidoAudiovisual;
 import ups.soft.poo.modelo.Documental;
@@ -18,12 +17,14 @@ import ups.soft.poo.modelo.SerieDeTV;
 import ups.soft.poo.modelo.Temporada;
 import ups.soft.poo.modelo.VideoMusical;
 
+// Guarda y lee los contenidos en el csv
 public class GestorArchivosCsv {
 
     private static final String DELIMITADOR_CSV = ",";
     private static final String SEPARADOR_SUBCAMPOS = "\\|";
     private static final String SEPARADOR_LISTA = ";";
 
+    // reune todas las listas en una sola para mandarlas a guardar al csv
     public void guardarContenidosDesdeListas(
             String rutaArchivoCsv,
             List<Pelicula> listaPeliculas,
@@ -43,6 +44,7 @@ public class GestorArchivosCsv {
         System.out.println("Guardado en " + rutaArchivoCsv);
     }
 
+    // Lee el csv y reparte cada elemento a la lista que le toca
     public void cargarContenidosEnListas(
             String rutaArchivoCsv,
             List<Pelicula> listaPeliculas,
@@ -98,6 +100,7 @@ public class GestorArchivosCsv {
         try (BufferedReader lectorCsv = new BufferedReader(new FileReader(rutaArchivoCsv))) {
             String filaLeidaCsv;
             while ((filaLeidaCsv = lectorCsv.readLine()) != null) {
+                // Ignoro lineas vacias para que no estorben al leer
                 if (!filaLeidaCsv.trim().isEmpty()) {
                     ContenidoAudiovisual contenidoInstanciado = reconstruirContenidoCsv(filaLeidaCsv);
                     if (contenidoInstanciado != null) {
@@ -125,6 +128,7 @@ public class GestorArchivosCsv {
         if (listaPodcasts != null) listaPodcasts.clear();
     }
 
+    // Revisa la primera columna para saber de que tipo de contenido es la fila
     private ContenidoAudiovisual reconstruirContenidoCsv(String filaLeidaCsv) {
         String[] cols = filaLeidaCsv.split(DELIMITADOR_CSV, -1);
         String tipo = cols[0].trim();
@@ -235,6 +239,7 @@ public class GestorArchivosCsv {
         return actores;
     }
 
+    //Se limpian T o ep para sacar solo el numero de temporada y capitulos
     private void agregarTemporadasDesdeCsv(SerieDeTV serie, String temporadasCsv) {
         if (temporadasCsv == null || temporadasCsv.trim().isEmpty()) {
             return;
@@ -245,9 +250,9 @@ public class GestorArchivosCsv {
                 String[] partes = limpio.split("-");
                 int numTemp = leerEnteroSeguro(partes[0].replaceFirst("^[Tt]", "").trim());
                 int numCap = leerEnteroSeguro(partes[1].trim());
-                if (numTemp > 0 && numCap > 0) {
+            if (numTemp > 0 && numCap > 0) {
                     serie.agregarTemporada(new Temporada(numTemp, numCap));
-                }
+            }
             }
         }
     }
@@ -256,6 +261,7 @@ public class GestorArchivosCsv {
         return (indice >= 0 && indice < cols.length) ? cols[indice].trim() : "";
     }
 
+    // Si viene vacio devuelvo 0 para que no se caiga el programa
     private int leerEnteroSeguro(String texto) {
         if (texto == null || texto.trim().isEmpty()) {
             return 0;

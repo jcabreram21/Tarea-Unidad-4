@@ -1,11 +1,9 @@
 package ups.soft.poo.controlador;
 
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
-
 import ups.soft.poo.modelo.Actor;
 import ups.soft.poo.modelo.Documental;
 import ups.soft.poo.modelo.Investigador;
@@ -31,7 +29,7 @@ public class ControladorAudiovisual {
         this.podcasts = new ArrayList<>();
     }
 
-    // Se crea una lista vacia por si pasan listas nulas que no falle
+    // Se crea una lista vacia por si pasan listas nulas y que no falle
     public ControladorAudiovisual(
     List<Pelicula> peliculas,
     List<SerieDeTV> series,

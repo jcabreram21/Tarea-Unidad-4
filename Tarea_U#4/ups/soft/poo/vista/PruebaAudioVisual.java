@@ -1,10 +1,10 @@
 package ups.soft.poo.vista;
 
+
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
-
 import ups.soft.poo.controlador.ControladorAudiovisual;
 import ups.soft.poo.controlador.GestorArchivosCsv;
 import ups.soft.poo.modelo.Actor;
@@ -17,6 +17,7 @@ import ups.soft.poo.modelo.SerieDeTV;
 import ups.soft.poo.modelo.Temporada;
 import ups.soft.poo.modelo.VideoMusical;
 
+//Solo se muestra el menu, se piden datos y se llama al controlador o al gestor csv
 public class PruebaAudioVisual {
 
     private static final String RUTA_CSV = "contenidos.csv";
@@ -287,6 +288,7 @@ public class PruebaAudioVisual {
 
         boolean agregado = controlador.agregarSerie(titulo, duracion, genero, temporadas);
         if (agregado && !listaSeries.isEmpty()) {
+            // Solo pido capitulos si la serie se guardo bien
             SerieDeTV serieCreada = listaSeries.get(listaSeries.size() - 1);
             agregarTemporadasDesdeConsola(entrada, serieCreada, temporadas);
         }
@@ -386,13 +388,14 @@ public class PruebaAudioVisual {
         }
     }
 
+    // A veces queda un enter suelto al leer numeros antes de un texto
     private static String leerTexto(Scanner entrada, String mensaje) {
         System.out.print(mensaje);
         String texto = entrada.nextLine();
         if (texto.trim().isEmpty()) {
             texto = entrada.nextLine();
         }
-            return texto.trim();
+        return texto.trim();
     }
 
     private static int leerEnteroPositivo(Scanner entrada, String mensaje) {
@@ -400,8 +403,8 @@ public class PruebaAudioVisual {
         while (valor <= 0) {
             System.out.print(mensaje);
             valor = validacionIngresos(entrada, "Error! Debes ingresar un número entero válido:");
-            if (valor <= 0) {
-                System.out.println("Ingresa un número mayor que 0.");
+        if (valor <= 0) {
+        System.out.println("Ingresa un número mayor que 0.");
             }
         }
         return valor;
@@ -411,12 +414,14 @@ public class PruebaAudioVisual {
         double valor = 0;
         while (valor <= 0) {
             System.out.print(mensaje);
+            
+            // Cambio coma por punto por si ingresan decimales con coma
             String token = entrada.next().replace(',', '.');
             try {
                 valor = Double.parseDouble(token);
-                if (valor <= 0) {
+            if (valor <= 0) {
                     System.out.println("Ingresa un número mayor que 0.");
-                }
+            }
             } catch (NumberFormatException e) {
                 System.out.println("Error! Ingresa un decimal válido:");
               }
@@ -469,4 +474,4 @@ public class PruebaAudioVisual {
             serie.agregarTemporada(new Temporada(numeroTemp, cantidadCapitulos));
         }
     }
-}
+}		
