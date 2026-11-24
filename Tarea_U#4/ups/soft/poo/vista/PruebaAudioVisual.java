@@ -288,6 +288,7 @@ public class PruebaAudioVisual {
 
         boolean agregado = controlador.agregarSerie(titulo, duracion, genero, temporadas);
         if (agregado && !listaSeries.isEmpty()) {
+        	
             // Solo pido capitulos si la serie se guardo bien
             SerieDeTV serieCreada = listaSeries.get(listaSeries.size() - 1);
             agregarTemporadasDesdeConsola(entrada, serieCreada, temporadas);
@@ -446,17 +447,16 @@ public class PruebaAudioVisual {
         boolean entradaValida = false;
 
         while (!entradaValida) {
+            String entradaTexto = scanner.nextLine().trim();
             try {
-                numero = scanner.nextInt();
+                numero = Integer.parseInt(entradaTexto);
                 entradaValida = true;
-            } catch (InputMismatchException e) {
+            } catch (NumberFormatException e) {
                 System.out.println(mensajeError);
-                scanner.next();
-              }
+            }
         }
         return numero;
     }
-
     private static void agregarTemporadasDesdeConsola(Scanner entrada, SerieDeTV serie, int totalTemporadas) {
         if (serie == null || totalTemporadas <= 0) {
             return;
